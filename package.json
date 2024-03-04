@@ -2,6 +2,7 @@
   "name": "pixel-geeks",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/pixel-geeks",
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@emotion/react": "^11.11.4",
