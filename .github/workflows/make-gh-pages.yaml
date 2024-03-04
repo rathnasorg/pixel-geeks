@@ -20,8 +20,8 @@ jobs:
 
 
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@4.1.4
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages # Change this to your gh-pages branch name
-          FOLDER: public
+          github_token: ${{ secrets.GH_PAT }}
+          publish_branch: gh-pages # Change this to your gh-pages branch name
+          publish_dir: public
