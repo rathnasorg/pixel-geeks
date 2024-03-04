@@ -1,6 +1,6 @@
 import { Button, Typography } from '@mui/material'
 import React, { useEffect } from 'react'
-import { Navigate, useNavigate } from 'react-router'
+import { useNavigate } from 'react-router'
 
 export interface BaseRedirectProps {
   to: string
