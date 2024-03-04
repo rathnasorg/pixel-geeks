@@ -1,33 +1,27 @@
-name: Build and Deploy React App
+name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main # Change this to your main branch name
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-      - name: Use Node.js 21
-        uses: actions/setup-node@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
           node-version: 21
 
-      - name: Install dependencies
-        run: npm install
 
-      - name: Build the app
-        run: |
-          pwd
-          ls -lart
-          npm run build
-
-      - name: Deploy to gh-pages
-        uses: actions/deploy-pages@v1
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
-          artifact_name: ./build
-          token: ${{ secrets.GH_PAT }}
-
+          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages # Change this to your gh-pages branch name
+          FOLDER: public
