@@ -18,10 +18,24 @@ jobs:
         with:
           node-version: 21
 
+      - name: Cache node_modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
+
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Project
+        run: npm run build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GH_PAT }}
           publish_branch: gh-pages # Change this to your gh-pages branch name
-          publish_dir: public
+          publish_dir: build
