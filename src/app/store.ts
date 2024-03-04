@@ -1,9 +1,9 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
-import counterReducer from '../features/counter/counterSlice'
+import albumReducer from '../features/album/albumSlice'
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    album: albumReducer,
   },
 })
 

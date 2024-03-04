@@ -8,10 +8,8 @@ interface Props {
 }
 
 export function PersistSelectedStates({ children }: Props) {
-  const state = useAppSelector((state: RootState) => state)
+  const count = useAppSelector((state: RootState) => state.album.error)
   const [searchParams, setSearchParams] = useSearchParams()
-
-  const count = String(state.counter.value)
 
   useEffect(() => {
 
@@ -21,14 +19,14 @@ export function PersistSelectedStates({ children }: Props) {
     setSearchParams(searchParams)
   }, [count])
 
-  return (<> { children } </>)
+  return (<> {children} </>)
 }
 
-export function NavLinkPersist(props: NavLinkProps ) {
+export function NavLinkPersist(props: NavLinkProps) {
   const { search } = useLocation()
 
   return (<>
-    <NavLink {...{...props, to: `${props.to}${search}`}}>{ props.children }</NavLink>
+    <NavLink {...{ ...props, to: `${props.to}${search}` }}>{props.children}</NavLink>
   </>)
 }
 
@@ -36,7 +34,7 @@ export function NavigatePersist(props: NavigateProps) {
   const { search } = useLocation()
 
   return (<>
-    <Navigate {...{replace: true, ...props, to: `${props.to}${search}`}} />
+    <Navigate {...{ replace: true, ...props, to: `${props.to}${search}` }} />
   </>)
 }
 
@@ -50,7 +48,7 @@ export function useNavigatePersist() {
     let search: string | undefined = ''
     let hash: string | undefined = ''
 
-    if(typeof to == 'string') {
+    if (typeof to == 'string') {
       const link = mergeLink(to, oldSearch)
       pathname = to.split('?')[0]
       search = link.search
@@ -73,7 +71,7 @@ function mergeLink(to: string, oldSearch: string) {
   const oldSearchObj = Object.fromEntries(new URLSearchParams(oldSearch).entries())
   const newSearchObj = Object.fromEntries(new URLSearchParams(url.search).entries())
   const pathname = url.pathname
-  const search = new URLSearchParams({...oldSearchObj, ...newSearchObj}).toString()
+  const search = new URLSearchParams({ ...oldSearchObj, ...newSearchObj }).toString()
 
   return { pathname, search }
 }

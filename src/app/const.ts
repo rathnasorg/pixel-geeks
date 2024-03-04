@@ -1,0 +1,1 @@
+export const SHOW_LOADING_ANIM_TIME = 1000
