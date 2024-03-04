@@ -28,7 +28,6 @@ jobs:
       - name: Deploy to gh-pages
         uses: actions/deploy-pages@v1
         with:
+          artifact_name: ./build
           token: ${{ secrets.GH_PAT }}
-          source: ./build
-          branch: gh-pages
 
