@@ -1,11 +1,12 @@
 import { Box, Card, CardContent, CardMedia, Fade, Grid, Typography } from '@mui/material'
-import React, { useEffect } from 'react'
-import { selectPhotos, selectSelectedPhoto, selectSettings, selectSlideShow, setSelectedPhoto, setSlideShow } from '../features/album/albumSlice'
+import React, { TouchEvent, useEffect, useState } from 'react'
+import { goToPrevPhoto, selectPhotos, selectSelectedPhoto, selectSettings, selectSlideShow, setSelectedPhoto, setSlideShow } from '../features/album/albumSlice'
 import { GeekPhoto, GeekSettings } from '../app/types'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { Masonry } from '@mui/lab'
 import GeekCardMedia from '../components/GeekCardMedia'
 import { useLocation } from 'react-router-dom'
+import { MIN_SWIPE_DISTANCE } from '../app/const'
 
 const Gallery = () => {
   const location = useLocation()
@@ -14,6 +15,25 @@ const Gallery = () => {
   const settings: GeekSettings = useAppSelector(selectSettings)
   const selectedPhoto = useAppSelector(selectSelectedPhoto)
   const slideShow = useAppSelector(selectSlideShow)
+  const [touchStart, setTouchStart] = useState<number>(NaN)
+  const [touchEnd, setTouchEnd] = useState<number>(NaN)
+
+  const onTouchStart = (e: TouchEvent) => {
+    setTouchEnd(NaN) // otherwise the swipe is fired even with usual touch events
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const onTouchMove = (e: TouchEvent) => setTouchEnd(e.targetTouches[0].clientX)
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > MIN_SWIPE_DISTANCE
+    const isRightSwipe = distance < -MIN_SWIPE_DISTANCE
+    if (isLeftSwipe || isRightSwipe) console.log('swipe', isLeftSwipe ? 'left' : 'right')
+    if (isLeftSwipe) dispatch(goToPrevPhoto())
+    if (isRightSwipe) dispatch(goToPrevPhoto())
+  }
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -52,7 +72,7 @@ const Gallery = () => {
     }
   }, [dispatch, location.search])
 
-  return (settings.isMasonary ? <Box>
+  return (settings.isMasonary ? <Box onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
     <Fade in={selectedPhoto !== undefined}>
       <Box onClick={() => { dispatch(setSelectedPhoto(undefined)) }}
         sx={{

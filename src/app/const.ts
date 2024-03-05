@@ -1,1 +1,2 @@
 export const SHOW_LOADING_ANIM_TIME = 1000
+export const MIN_SWIPE_DISTANCE = 50
