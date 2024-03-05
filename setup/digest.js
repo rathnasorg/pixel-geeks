@@ -83,27 +83,3 @@ export const cover = ${JSON.stringify({ ...processedFilesInfo[0], title: 'pixel-
     })
   }
 })
-
-
-/*const findOptimizedQuality = (inputPath, targetFileSize) => {
-  let minQuality = 0
-  let maxQuality = 100
-  let currentQuality
-  while (maxQuality - minQuality > 1) {
-    currentQuality = Math.floor((minQuality + maxQuality) / 2)
-    try {
-      if (sharp(inputPath)
-        .jpeg({ quality: currentQuality })
-        .png({ quality: currentQuality })
-        .toBuffer().length > targetFileSize) {
-        maxQuality = currentQuality
-      } else {
-        minQuality = currentQuality
-      }
-    } catch (error) {
-      console.error('Error processing image:', error)
-      return
-    }
-  }
-  return minQuality
-}*/

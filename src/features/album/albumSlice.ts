@@ -10,6 +10,8 @@ export interface AlbumSliceState {
   photos: GeekPhoto[]
   settings: GeekSettings
   loading: boolean
+  slideShow: boolean
+  selectedPhoto?: number | undefined
   error: string | null
 }
 
@@ -18,7 +20,8 @@ const initialState: AlbumSliceState = {
   photos: album as GeekPhoto[],
   settings: settings,
   loading: true,
-  error: null,
+  slideShow: false,
+  error: null
 }
 
 export const hideLoadingAsync = createAsyncThunk('album/hideLoading', async () => new Promise<undefined>((resolve) => setTimeout(() => resolve(undefined), SHOW_LOADING_ANIM_TIME)))
@@ -35,7 +38,19 @@ export const albumSlice = createSlice({
     setStatus: (state, action: PayloadAction<{ loading: boolean, error: string | null }>) => {
       state.loading = action.payload.loading
       state.error = action.payload.error
-    }
+    },
+    setSelectedPhoto: (state, action: PayloadAction<number | undefined>) => {
+      state.selectedPhoto = action.payload
+    },
+    goToNextPhoto: (state) => {
+      state.selectedPhoto = state.selectedPhoto !== undefined && state.selectedPhoto < state.photos.length - 1 ? state.selectedPhoto + 1 : 0
+    },
+    goToPrevPhoto: (state) => {
+      state.selectedPhoto = state.selectedPhoto !== undefined && state.selectedPhoto > 0 ? state.selectedPhoto - 1 : state.photos.length - 1
+    },
+    setSlideShow: (state, action: PayloadAction<boolean>) => {
+      state.slideShow = action.payload
+    },
   }, extraReducers: (builder) => {
     builder.addCase(hideLoadingAsync.fulfilled, (state) => {
       state.loading = false
@@ -47,10 +62,12 @@ export const albumSlice = createSlice({
   }
 })
 
-export const { setStatus } = albumSlice.actions
+export const { setStatus, setSlideShow, setSelectedPhoto, goToNextPhoto, goToPrevPhoto } = albumSlice.actions
 export const selectCover = (state: { album: AlbumSliceState }) => state.album.cover
 export const selectTitle = (state: { album: AlbumSliceState }) => state.album.cover.title
 export const selectPhotos = (state: { album: AlbumSliceState }) => state.album.photos
 export const selectLoading = (state: { album: AlbumSliceState }) => state.album.loading
+export const selectSlideShow = (state: { album: AlbumSliceState }) => state.album.slideShow
 export const selectSettings = (state: { album: AlbumSliceState }) => state.album.settings
+export const selectSelectedPhoto = (state: { album: AlbumSliceState }) => state.album.selectedPhoto
 export default albumSlice.reducer

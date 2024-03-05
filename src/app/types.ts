@@ -11,5 +11,6 @@ export interface GeekSettings {
   hideTitleAndDescription: boolean
   isMasonary: boolean
   greyScalePercent: number
+  slideShowInterval: number
 }
 
