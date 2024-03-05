@@ -1,12 +1,45 @@
 # Pixel-Geeks
 A photo album for geeks to host photos on GitHub.
 
-## How to use
+## How to clone & use
+```sh
+# Clone the repo
+git clone https://github.com/rathnasorg/pixel-geeks.git
 
-- Clone the repo
-- Copy your images into ./setup/input
-- `npm start`
+# Change the repo name
+mv pixel-geeks PG20240304AadyaBday && cd PG20240304AadyaBday
 
+# Change the base uri
+sed -i '' 's/pixel-geeks/PG20240304AadyaBday/g' package.json
+
+# Change the title
+sed -i '' 's/pixel-geeks/PG20240304AadyaBday/g' ./public/index.html
+sed -i '' 's/pixel-geeks/PG20240304AadyaBday/g' ./setup/digest.js
+
+# Change the remote url
+git remote -v
+git remote set-url origin https://github.com/rathnasorg/PG20240304AadyaBday.git
+git remote -v
+
+# Cleanup ./setup/input
+rm -rf ./setup/input && mkdir -p ./setup/input
+
+# Copy your images into ./setup/input
+cp -r ~/Downloads/20240304_AadyaBday/* ./setup/input/
+
+# Skip this step if you want to deploy directly online, if you want to to test locally
+npm i && npm start
+
+# Create the remote GitHub repo & push to automatically deploy on GitHub pages
+git checkout --orphan main1
+git add -A
+git commit -am "first commit"
+git branch -D main
+git branch -m main
+git push -f origin main
+git branch --set-upstream-to=origin/main main
+
+```
 
 ## To host it on GitHub Pages
 
