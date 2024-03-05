@@ -37,14 +37,11 @@ npm i && node ./setup/digest.js
 rm -rf ./setup/input && mkdir -p ./setup/input
 rm -rf ./public/photos/raw && mkdir -p ./public/photos/raw
 
-# Create the remote GitHub repo & push to automatically deploy on GitHub pages
-git checkout --orphan main1
-git add -A
-git commit -am "first commit"
-git branch -D main
-git branch -m main
-git push -f origin main
-git branch --set-upstream-to=origin/main main
+# Create the remote GitHub repo
+
+# Push code, it will automatically be deployed on GitHub pages
+git add -A && git commit -am "first commit" && git push -f origin main
+
 
 ```
 
