@@ -72,7 +72,7 @@ export const album = ${JSON.stringify(processedFilesInfo)}
     })
     const coverTsContent = `
 /* eslint-disable */
-export const cover = ${JSON.stringify({ ...processedFilesInfo[0], title: 'Pixel Geeks', description: 'To modify, edit src/album/cover.ts' })}
+export const cover = ${JSON.stringify({ ...processedFilesInfo[0], title: 'pixel-geeks', description: 'To modify, edit src/album/cover.ts' })}
 `
     fs.writeFile(coverTsFile, coverTsContent, err => {
       if (err) {
