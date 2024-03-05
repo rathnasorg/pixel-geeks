@@ -24,11 +24,18 @@ git remote -v
 # Cleanup ./setup/input
 rm -rf ./setup/input && mkdir -p ./setup/input
 
-# Copy your images into ./setup/input
+# Copy your images (DO NOT MOVE IT) into ./setup/input
 cp -r ~/Downloads/20240304_AadyaBday/* ./setup/input/
 
 # Skip this step if you want to deploy directly online, if you want to to test locally
 npm i && npm start
+
+# Optimize images
+node ./setup/digest.js
+
+# Cleanup to reduce file size, ignore if you want to persist original files
+rm -rf ./setup/input && mkdir -p ./setup/input
+rm -rf ./public/photos/raw && mkdir -p ./public/photos/raw
 
 # Create the remote GitHub repo & push to automatically deploy on GitHub pages
 git checkout --orphan main1
