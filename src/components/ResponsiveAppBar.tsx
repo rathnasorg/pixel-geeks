@@ -10,7 +10,7 @@ import { GitHub, Camera, PlayArrow, Pause, ArrowLeft, ArrowRight } from '@mui/ic
 import { useNavigate } from 'react-router'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { grey } from '@mui/material/colors'
-import { goToNextPhoto, goToPrevPhoto, selectSelectedPhoto, selectSlideShow, selectTitle, setSlideShow } from '../features/album/albumSlice'
+import { goToNextPhoto, goToPrevPhoto, selectPhotos, selectSelectedPhoto, selectSlideShow, selectTitle, setSlideShow } from '../features/album/albumSlice'
 import { ButtonGroup } from '@mui/material'
 
 export interface MenuItem {
@@ -25,33 +25,15 @@ function ResponsiveAppBar() {
   const title = useAppSelector(selectTitle)
   const selectedPhoto = useAppSelector(selectSelectedPhoto)
   const slideShow = useAppSelector(selectSlideShow)
+  const photos = useAppSelector(selectPhotos)
   const dispatch = useAppDispatch()
 
   return (
     <AppBar position="sticky">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Camera sx={{ display: { xs: 'flex' }, mr: 1, color: grey[100] }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            onClick={() => navigate('/home')}
-            sx={{
-              mr: 2,
-              display: { xs: 'flex' },
-              flexGrow: { xs: 1 },
-              fontFamily: 'monospace',
-              fontWeight: 900,
-              letterSpacing: '.3rem',
-              color: grey[100],
-              textDecoration: 'none',
-              cursor: 'pointer',
-            }}
-          >
-            {title ? title : 'Pixel Geeks'}
-          </Typography>
-          {selectedPhoto !== undefined && <Box sx={{ display: 'flex', flexGrow: 1 }}>
+          {selectedPhoto !== undefined ? <Box sx={{ display: 'flex', flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <Typography variant="button" noWrap sx={{ mr: 2 }}>{selectedPhoto + 1}/{photos?.length}</Typography>
             <ButtonGroup variant="outlined" size="small" color="primary" aria-label="contained primary button group">
               <Button color="secondary" onClick={() => dispatch(goToPrevPhoto())}>
                 <ArrowLeft />
@@ -63,7 +45,28 @@ function ResponsiveAppBar() {
                 <ArrowRight />
               </Button>
             </ButtonGroup>
-          </Box>}
+          </Box> : <>
+            <Camera sx={{ display: { xs: 'flex' }, mr: 1, color: grey[100] }} />
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              onClick={() => navigate('/home')}
+              sx={{
+                mr: 2,
+                display: { xs: 'flex' },
+                flexGrow: { xs: 1 },
+                fontFamily: 'monospace',
+                fontWeight: 900,
+                letterSpacing: '.3rem',
+                color: grey[100],
+                textDecoration: 'none',
+                cursor: 'pointer',
+              }}
+            >
+              {title ? title : 'Pixel Geeks'}
+            </Typography>
+          </>}
           <Button color="secondary" size="large"
             target="_blank"
             href="https://github.com/rathnasorg/pixel-geeks"

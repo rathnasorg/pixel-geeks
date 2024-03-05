@@ -5,8 +5,10 @@ import { GeekPhoto, GeekSettings } from '../app/types'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { Masonry } from '@mui/lab'
 import GeekCardMedia from '../components/GeekCardMedia'
+import { useLocation } from 'react-router-dom'
 
 const Gallery = () => {
+  const location = useLocation()
   const dispatch = useAppDispatch()
   const photos: GeekPhoto[] = useAppSelector(selectPhotos)
   const settings: GeekSettings = useAppSelector(selectSettings)
@@ -41,6 +43,15 @@ const Gallery = () => {
     }
   }, [slideShow, selectedPhoto, photos.length, dispatch, settings.slideShowInterval])
 
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search)
+    const slideshowParam = queryParams.get('slideshow')
+    if (slideshowParam && (slideshowParam.toLowerCase() === 'true' || slideshowParam.toLowerCase() === 'yes')) {
+      dispatch(setSelectedPhoto(0))
+      dispatch(setSlideShow(true))
+    }
+  }, [dispatch, location.search])
+
   return (settings.isMasonary ? <Box>
     <Fade in={selectedPhoto !== undefined}>
       <Box onClick={() => { dispatch(setSelectedPhoto(undefined)) }}
@@ -67,7 +78,10 @@ const Gallery = () => {
     </Fade>
     <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 4 }}>
       {photos.map((photo: GeekPhoto, index: number) => (
-        <Card key={index} onClick={() => { dispatch(setSelectedPhoto(index)) }}>
+        <Card key={index} onClick={() => {
+          dispatch(setSlideShow(false))
+          dispatch(setSelectedPhoto(index))
+        }}>
           <GeekCardMedia photo={photo} preferThumbnail={true} />
           {(photo.title || photo.description) && !settings.hideTitleAndDescription && <CardContent>
             <Typography variant="h5" component="div">
@@ -86,7 +100,10 @@ const Gallery = () => {
     : <Grid container spacing={4}>
       {photos.map((photo: GeekPhoto, index: number) => (
         <Grid item key={index} xs={12} sm={6} md={3}>
-          <Card key={index} onClick={() => { dispatch(setSelectedPhoto(index)) }}>
+          <Card key={index} onClick={() => {
+            dispatch(setSlideShow(false))
+            dispatch(setSelectedPhoto(index))
+          }}>
             <CardMedia component="img" image={photo.url} title={photo.title || 'Photo'} />
             {(photo.title || photo.description) && !settings.hideTitleAndDescription && <CardContent>
               <Typography variant="h5" component="div">
