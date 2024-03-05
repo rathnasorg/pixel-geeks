@@ -51,7 +51,7 @@ function ResponsiveAppBar() {
           >
             {title ? title : 'Pixel Geeks'}
           </Typography>
-          {selectedPhoto && <Box sx={{ display: 'flex', flexGrow: 1 }}>
+          {selectedPhoto !== undefined && <Box sx={{ display: 'flex', flexGrow: 1 }}>
             <ButtonGroup variant="outlined" size="small" color="primary" aria-label="contained primary button group">
               <Button color="secondary" onClick={() => dispatch(goToPrevPhoto())}>
                 <ArrowLeft />
@@ -63,8 +63,7 @@ function ResponsiveAppBar() {
                 <ArrowRight />
               </Button>
             </ButtonGroup>
-          </Box>
-          }
+          </Box>}
           <Button color="secondary" size="large"
             target="_blank"
             href="https://github.com/rathnasorg/pixel-geeks"
