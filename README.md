@@ -31,7 +31,7 @@ cp -r ~/Downloads/20240304_AadyaBday/* ./setup/input/
 npm i && npm start
 
 # Optimize images
-node ./setup/digest.js
+npm i && node ./setup/digest.js
 
 # Cleanup to reduce file size, ignore if you want to persist original files
 rm -rf ./setup/input && mkdir -p ./setup/input
