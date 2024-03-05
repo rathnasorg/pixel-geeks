@@ -1,6 +1,6 @@
 import { Box, Card, CardContent, CardMedia, Fade, Grid, Typography } from '@mui/material'
 import React, { TouchEvent, useEffect, useState } from 'react'
-import { goToPrevPhoto, selectPhotos, selectSelectedPhoto, selectSettings, selectSlideShow, setSelectedPhoto, setSlideShow } from '../features/album/albumSlice'
+import { goToPrevPhoto, goToNextPhoto, selectPhotos, selectSelectedPhoto, selectSettings, selectSlideShow, setSelectedPhoto, setSlideShow } from '../features/album/albumSlice'
 import { GeekPhoto, GeekSettings } from '../app/types'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { Masonry } from '@mui/lab'
