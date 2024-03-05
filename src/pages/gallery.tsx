@@ -32,7 +32,7 @@ const Gallery = () => {
     const isRightSwipe = distance < -MIN_SWIPE_DISTANCE
     if (isLeftSwipe || isRightSwipe) console.log('swipe', isLeftSwipe ? 'left' : 'right')
     if (isLeftSwipe) dispatch(goToPrevPhoto())
-    if (isRightSwipe) dispatch(goToPrevPhoto())
+    if (isRightSwipe) dispatch(goToNextPhoto())
   }
 
   useEffect(() => {
