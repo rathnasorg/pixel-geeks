@@ -17,13 +17,11 @@ const Gallery = () => {
   const slideShow = useAppSelector(selectSlideShow)
   const [touchStart, setTouchStart] = useState<number>(NaN)
   const [touchEnd, setTouchEnd] = useState<number>(NaN)
-  const [swiping, setSwiping] = useState(false)
   const [swipeX, setSwipeX] = useState(0)
   // const [highResImgReady, setHighResImgReady] = useState(false)
 
   const onTouchStart = (e: TouchEvent) => {
     setTouchEnd(NaN) // otherwise the swipe is fired even with usual touch events
-    setSwiping(true)
     setTouchStart(e.targetTouches[0].clientX)
   }
 
@@ -33,7 +31,6 @@ const Gallery = () => {
   }
 
   const onTouchEnd = () => {
-    setSwiping(false)
     setSwipeX(0)
     if (!touchStart || !touchEnd || selectedPhoto === undefined) return
     const distance = touchStart - touchEnd
