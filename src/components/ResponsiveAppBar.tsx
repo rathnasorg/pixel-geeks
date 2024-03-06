@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import Button from '@mui/material/Button'
 import MenuItem from '@mui/material/MenuItem'
-import { GitHub, Camera, PlayArrow, Pause, ArrowLeft, ArrowRight } from '@mui/icons-material'
+import { GitHub, Camera, PlayArrow, Pause, ArrowLeft, ArrowRight, Share } from '@mui/icons-material'
 import { useNavigate } from 'react-router'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { grey } from '@mui/material/colors'
@@ -34,7 +34,7 @@ function ResponsiveAppBar() {
         <Toolbar disableGutters>
           {selectedPhoto !== undefined ? <Box sx={{ display: 'flex', flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Typography variant="button" noWrap sx={{ mr: 2 }}>{selectedPhoto + 1}/{photos?.length}</Typography>
-            <ButtonGroup variant="outlined" size="small" color="primary" aria-label="contained primary button group">
+            <ButtonGroup variant="text" size="small" color="secondary" aria-label="contained primary button group">
               <Button color="secondary" onClick={() => dispatch(goToPrevPhoto())}>
                 <ArrowLeft />
               </Button>
@@ -67,12 +67,20 @@ function ResponsiveAppBar() {
               {title ? title : 'Pixel Geeks'}
             </Typography>
           </>}
-          <Button color="secondary" size="large"
-            target="_blank"
-            href="https://github.com/rathnasorg/pixel-geeks"
-            sx={{ my: 2, color: 'white', display: 'block' }}>
-            <GitHub />
-          </Button>
+          <ButtonGroup variant="text" size="small" color="secondary" aria-label="contained primary button group">
+            <Button color="secondary" size="large"
+              target="_blank"
+              href="https://github.com/rathnasorg/pixel-geeks"
+              sx={{ my: 2, color: 'white', display: 'block' }}>
+              <Share />
+            </Button>
+            <Button color="secondary" size="large"
+              target="_blank"
+              href="https://github.com/rathnasorg/pixel-geeks"
+              sx={{ my: 2, color: 'white', display: 'block' }}>
+              <GitHub />
+            </Button>
+          </ButtonGroup>
         </Toolbar>
       </Container>
     </AppBar>

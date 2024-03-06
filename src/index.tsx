@@ -20,9 +20,9 @@ const theme = createTheme({
       contrastText: '#FFFFFF'
     },
     secondary: {
-      main: '#FFD600',
-      light: '#FFFF8D',
-      dark: '#FFC400',
+      main: '#F5EDFF',
+      light: '#FAF6FF',
+      dark: '#5900C8',
       contrastText: '#000000'
     }
   }, typography: {

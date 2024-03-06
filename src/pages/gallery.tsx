@@ -17,16 +17,25 @@ const Gallery = () => {
   const slideShow = useAppSelector(selectSlideShow)
   const [touchStart, setTouchStart] = useState<number>(NaN)
   const [touchEnd, setTouchEnd] = useState<number>(NaN)
+  const [swiping, setSwiping] = useState(false)
+  const [swipeX, setSwipeX] = useState(0)
+  // const [highResImgReady, setHighResImgReady] = useState(false)
 
   const onTouchStart = (e: TouchEvent) => {
     setTouchEnd(NaN) // otherwise the swipe is fired even with usual touch events
+    setSwiping(true)
     setTouchStart(e.targetTouches[0].clientX)
   }
 
-  const onTouchMove = (e: TouchEvent) => setTouchEnd(e.targetTouches[0].clientX)
+  const onTouchMove = (e: TouchEvent) => {
+    setSwipeX(e.targetTouches[0].clientX - touchStart)
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
 
   const onTouchEnd = () => {
-    if (!touchStart || !touchEnd || !selectedPhoto) return
+    setSwiping(false)
+    setSwipeX(0)
+    if (!touchStart || !touchEnd || selectedPhoto === undefined) return
     const distance = touchStart - touchEnd
     const isLeftSwipe = distance > MIN_SWIPE_DISTANCE
     const isRightSwipe = distance < -MIN_SWIPE_DISTANCE
@@ -55,12 +64,11 @@ const Gallery = () => {
   }, [selectedPhoto, slideShow, dispatch, photos.length])
 
   useEffect(() => {
+    let interval: NodeJS.Timeout
     if (slideShow && selectedPhoto !== undefined) {
-      const interval = setInterval(() => {
-        dispatch(setSelectedPhoto(selectedPhoto !== null && selectedPhoto < photos.length - 1 ? selectedPhoto + 1 : 0))
-      }, settings.slideShowInterval)
-      return () => clearInterval(interval)
+      interval = setInterval(() => dispatch(goToNextPhoto()), settings.slideShowInterval)
     }
+    return () => clearInterval(interval)
   }, [slideShow, selectedPhoto, photos.length, dispatch, settings.slideShowInterval])
 
   useEffect(() => {
@@ -72,7 +80,13 @@ const Gallery = () => {
     }
   }, [dispatch, location.search])
 
-  return (settings.isMasonary ? <Box onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
+  useEffect(() => {
+    // setHighResImgReady(false)
+  }, [selectedPhoto])
+
+  return (settings.isMasonary ? <Box onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd} sx={{
+    overflow: 'hidden'
+  }}>
     <Fade in={selectedPhoto !== undefined}>
       <Box onClick={() => { dispatch(setSelectedPhoto(undefined)) }}
         sx={{
@@ -88,12 +102,31 @@ const Gallery = () => {
           zIndex: (theme) => theme.zIndex.drawer + 2,
           pt: 1
         }}>
-        {selectedPhoto !== undefined && <CardMedia component="img" image={photos[selectedPhoto].url} title={photos[selectedPhoto].title} sx={{
-          maxHeight: '90vh',
-          maxWidth: '90vw',
-          objectFit: 'contain',
-          filter: `grayscale(${settings.greyScalePercent}%)`
-        }} />}
+        {selectedPhoto !== undefined && <Box sx={{
+          transform: `translateX(${swipeX}px)`,
+          transition: 'transform 0.3s ease',
+          position: 'relative'
+        }}>
+          {/* <CardMedia component="img" image={photos[selectedPhoto].thumbnailUrl} title={photos[selectedPhoto].title} sx={{
+            maxHeight: '90vh',
+            maxWidth: '90vw',
+            objectFit: 'contain',
+            filter: 'blur(5px)',
+            zIndex: highResImgReady ? -99 : 99,
+            opacity: highResImgReady ? '0' : '1',
+            transition: 'opacity 500ms ease-out 50ms',
+            position: 'absolute',
+          }} /> */}
+          <CardMedia component="img" image={photos[selectedPhoto].url} title={photos[selectedPhoto].title} sx={{
+            maxHeight: '90vh',
+            maxWidth: '90vw',
+            objectFit: 'contain',
+            opacity: 1,
+            transition: 'opacity 500ms ease-in 50ms'
+          }} onLoad={() => {
+            //setTimeout(() => setHighResImgReady(true), 1)
+          }} />
+        </Box>}
       </Box>
     </Fade>
     <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 4 }}>
