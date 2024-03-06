@@ -26,13 +26,13 @@ const Gallery = () => {
   const onTouchMove = (e: TouchEvent) => setTouchEnd(e.targetTouches[0].clientX)
 
   const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return
+    if (!touchStart || !touchEnd || !selectedPhoto) return
     const distance = touchStart - touchEnd
     const isLeftSwipe = distance > MIN_SWIPE_DISTANCE
     const isRightSwipe = distance < -MIN_SWIPE_DISTANCE
     if (isLeftSwipe || isRightSwipe) console.log('swipe', isLeftSwipe ? 'left' : 'right')
-    if (isLeftSwipe) dispatch(goToPrevPhoto())
-    if (isRightSwipe) dispatch(goToNextPhoto())
+    if (isLeftSwipe) dispatch(goToNextPhoto())
+    if (isRightSwipe) dispatch(goToPrevPhoto())
   }
 
   useEffect(() => {
