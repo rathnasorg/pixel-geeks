@@ -11,10 +11,12 @@ const optimizedWidth = 1920
 const thumbnailsDir = './public/photos/thumbnails'
 const thumbnailWidth = 250
 
+const metaJsonFile = './public/metadata.json'
+
 const albumTsFile = './src/album/album.ts'
 const coverTsFile = './src/album/cover.ts'
 
-const processedFilesInfo = []
+const photos = []
 
 fs.readdir(inputDir, (err, files) => {
   if (err) {
@@ -49,7 +51,7 @@ fs.readdir(inputDir, (err, files) => {
 
   let tIndex = 0
   for (const file of imageFiles) {
-    processedFilesInfo.push({
+    photos.push({
       id: ++tIndex,
       url: `photos/optimized/${file}`,
       title: `Photo ${tIndex}`,
@@ -58,10 +60,10 @@ fs.readdir(inputDir, (err, files) => {
     })
   }
 
-  if (processedFilesInfo.length > 0) {
+  if (photos.length > 0) {
     const albumTsContent = `
 /* eslint-disable */
-export const album = ${JSON.stringify(processedFilesInfo)}
+export const album = ${JSON.stringify(photos)}
 `
     fs.writeFile(albumTsFile, albumTsContent, err => {
       if (err) {
@@ -70,15 +72,24 @@ export const album = ${JSON.stringify(processedFilesInfo)}
         console.log('album.ts written successfully')
       }
     })
+    const cover = { ...photos[0], title: 'pixel-geeks', description: 'To modify, edit src/album/cover.ts' }
     const coverTsContent = `
 /* eslint-disable */
-export const cover = ${JSON.stringify({ ...processedFilesInfo[0], title: 'pixel-geeks', description: 'To modify, edit src/album/cover.ts' })}
+export const cover = ${JSON.stringify(cover)}
 `
     fs.writeFile(coverTsFile, coverTsContent, err => {
       if (err) {
         console.error('Error writing cover.ts:', err)
       } else {
         console.log('cover.ts written successfully')
+      }
+    })
+
+    fs.writeFile(metaJsonFile, JSON.stringify({ photos, cover }), err => {
+      if (err) {
+        console.error('Error writing metadata.json:', err)
+      } else {
+        console.log('metadata.json written successfully')
       }
     })
   }
