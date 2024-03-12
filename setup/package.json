@@ -1,0 +1,15 @@
+{
+  "name": "pixel-geeks-setup",
+  "version": "1.0.0",
+  "description": "Setup for pixel-geeks with only few dev deps",
+  "main": "digest.js",
+  "scripts": {
+    "start": "node setup/digest.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "anand@rathnas.com",
+  "license": "ISC",
+  "devDependencies": {
+    "sharp": "^0.33.2"
+  }
+}

@@ -30,7 +30,6 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "digest": "node setup/digest.js",
     "start": "npm run digest && react-scripts start",
     "build": "pwd && npm run digest && react-scripts build",
     "test": "npm run digest && react-scripts test",
@@ -62,7 +61,6 @@
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
     "eslint": "^8.57.0",
-    "eslint-plugin-react": "^7.33.2",
-    "sharp": "^0.33.2"
+    "eslint-plugin-react": "^7.33.2"
   }
 }

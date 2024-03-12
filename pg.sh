@@ -71,7 +71,7 @@ fi
 # ~~ 
 
 # Optimize images and cleanup
-npm i && node ./setup/digest.js
+(cd ./setup; npm i; npm run start)
 rm -rf ./setup/input && mkdir -p ./setup/input
 rm -rf ./public/photos/raw && mkdir -p ./public/photos/raw
 
@@ -122,3 +122,4 @@ git push -u origin main
 
 # Open the new repository in the browser
 open "$updatedRemoteUrlNoCreds"
+cd .. && code "$albumName"
