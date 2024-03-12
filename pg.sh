@@ -1,16 +1,5 @@
 #!/bin/sh
 
-# prompt for an album name
-echo "Enter album name: "
-read tmpAlbumName
-albumName="PG${tmpAlbumName//[^[:alnum:]]/}"
-echo "Album name (clensed): $albumName, proceed? (Y/n)"
-read proceed
-if [ "$proceed" = "n" ]; then
-  echo "Exiting..."
-  exit 1
-fi
-
 # Proceed only if git config user.name and user.email are set
 if [ -z "$(git config user.name)" ]; then
   echo "git config user.name is not set. Retry after setting it like..."
@@ -29,12 +18,26 @@ if ! command -v gh &> /dev/null; then
 fi
 
 
+# ~~
+
+# prompt for an album name
+echo "Enter album name: "
+read tmpAlbumName
+albumName="PG${tmpAlbumName//[^[:alnum:]]/}"
+echo "Album name (clensed): $albumName, proceed? (Y/n)"
+read proceed
+if [ "$proceed" = "n" ]; then
+  echo "Exiting..."
+  exit 1
+fi
+
+
 
 
 # ~~
 
 # rename to $albumName (prefix with PG and only alphanumeric characters)
-mv ../pixel-geeks "$albumName"
+mv ../pixel-geeks "../$albumName"
 
 # Replace all pixel-geeks in the album with $albumName
 sed -i '' -e "s/pixel-geeks/$albumName/g" package.json
@@ -46,6 +49,7 @@ sed -i '' -e "s/pixel-geeks/$tmpAlbumName/g" ./setup/digest.js
 # ~~
 
 # prompt for a directory where the photos are located
+echo "eg: /Users/username/Downloads/20240205_SomeoneBdayU"
 read -e -p "Enter directory where photos are located: " dir
 
 # Proceed only if the directory exists
@@ -91,10 +95,12 @@ updatedRemoteUrlNoCreds=$(echo "$updatedRemoteUrl" | sed "s/https:\/\/.*@/https:
 # Create a new private repository on GitHub
 tmp=${updatedRemoteUrlNoCreds#https://github.com/}
 tmp=${tmp%.git}
+usernameOrOrgname=$(echo "$tmp" | cut -d'/' -f1)
+echo "Checking if organization $usernameOrOrgname exists..."
 if gh api /orgs/"$usernameOrOrgname" &> /dev/null; then
+  echo "Organization found. Creating repository $tmp"
   orgname=$(echo "$tmp" | cut -d'/' -f1)
   gh repo create "$tmp" --private --homepage "https://$orgname.github.io/$albumName/"
-  echo "Organization found. Creating repository $tmp"
 else
   username=$(echo "$tmp" | cut -d'/' -f1)
   gh repo create "$albumName" --private --homepage "https://$username.github.io/$albumName/"
