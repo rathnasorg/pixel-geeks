@@ -100,20 +100,18 @@ echo "Checking if organization $usernameOrOrgname exists..."
 if gh api /orgs/"$usernameOrOrgname" &> /dev/null; then
   echo "Organization found. Creating repository $tmp"
   orgname=$(echo "$tmp" | cut -d'/' -f1)
-  gh repo create "$tmp" --private --homepage "https://$orgname.github.io/$albumName/"
+  gh repo create "$tmp" --private --homepage "https://$orgname.github.io/$albumName/album?slideshow=true"
 else
   username=$(echo "$tmp" | cut -d'/' -f1)
-  gh repo create "$albumName" --private --homepage "https://$username.github.io/$albumName/"
+  gh repo create "$albumName" --private --homepage "https://$username.github.io/$albumName/album?slideshow=true"
   echo "Creating repository $tmp"
 fi
 
-echo "Repository created. Waiting for 5 seconds..."
-sleep 5
+echo "Repository created. Waiting for 15 seconds..."
+sleep 15
 
 echo "Pushing to the new repo $updatedRemoteUrlNoCreds"
 # Commit and push to the new repository
-git config user.name
-git config user.email
 git add .
 git commit -m "Initial commit"
 git push -u origin main

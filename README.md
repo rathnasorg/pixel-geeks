@@ -3,12 +3,17 @@ A photo album for geeks to host photos on GitHub.
 
 ## How to clone & use
 
-Simply clone the repo and execute pg.sh and follow the prompts
+- Ensure [github cli](cli.github.com) is installed
+- Clone this repo
+- Setup git's user.name and user.email
+- Execute ./pg.sh and follow the prompts
 
 ```sh
 
 git clone https://github.com/rathnasorg/pixel-geeks.git
 cd pixel-geeks
+git config user.name yourname
+git config user.email yourname@example.com
 ./pg.sh
 
 ```
