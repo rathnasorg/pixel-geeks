@@ -64,6 +64,11 @@ rm -rf ./public/photos/raw && mkdir -p ./public/photos/raw
 
 
 
+# Proceed only if ./public/photos/optimized is not empty
+if [ ! "$(ls -A ./public/photos/optimized)" ]; then
+  echo "No photos found in ./public/photos/optimized. Exiting..."
+  exit 7
+fi
 
 # ~~
 
