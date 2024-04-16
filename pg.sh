@@ -127,4 +127,4 @@ git push -u origin main
 
 # Open the new repository in the browser
 open "$updatedRemoteUrlNoCreds"
-cd .. && code "$albumName"
+cd "../$albumName"
