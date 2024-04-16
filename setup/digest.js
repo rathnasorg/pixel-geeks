@@ -2,19 +2,19 @@ const fs = require('fs')
 const path = require('path')
 const sharp = require('sharp')
 
-const inputDir = './setup/input'
-const rawDir = './public/photos/raw/'
+const inputDir = './input'
+const rawDir = '../public/photos/raw/'
 
-const optimizedDir = './public/photos/optimized'
+const optimizedDir = '../public/photos/optimized'
 const optimizedWidth = 1920
 
-const thumbnailsDir = './public/photos/thumbnails'
+const thumbnailsDir = '../public/photos/thumbnails'
 const thumbnailWidth = 250
 
-const metaJsonFile = './public/metadata.json'
+const metaJsonFile = '../public/metadata.json'
 
-const albumTsFile = './src/album/album.ts'
-const coverTsFile = './src/album/cover.ts'
+const albumTsFile = '../src/album/album.ts'
+const coverTsFile = '../src/album/cover.ts'
 
 const photos = []
 
