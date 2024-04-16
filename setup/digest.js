@@ -72,7 +72,7 @@ export const album = ${JSON.stringify(photos)}
         console.log('album.ts written successfully')
       }
     })
-    const cover = { ...photos[0], title: 'pixel-geeks', description: 'To modify, edit src/album/cover.ts' }
+    const cover = { ...photos[0], title: 'pixel-geeks', description: 'pixel-geeks' }
     const coverTsContent = `
 /* eslint-disable */
 export const cover = ${JSON.stringify(cover)}
