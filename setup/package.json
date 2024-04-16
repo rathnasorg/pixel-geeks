@@ -4,7 +4,7 @@
   "description": "Setup for pixel-geeks with only few dev deps",
   "main": "digest.js",
   "scripts": {
-    "start": "node setup/digest.js",
+    "start": "node digest.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "anand@rathnas.com",
