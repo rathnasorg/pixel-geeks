@@ -33,19 +33,6 @@ fi
 
 
 
-
-# ~~
-
-# rename to $albumName (prefix with PG and only alphanumeric characters)
-mv ../pixel-geeks "../$albumName"
-
-# Replace all pixel-geeks in the album with $albumName
-sed -i '' -e "s/pixel-geeks/$albumName/g" package.json
-sed -i '' -e "s/pixel-geeks/$tmpAlbumName/g" ./public/index.html
-sed -i '' -e "s/pixel-geeks/$tmpAlbumName/g" ./setup/digest.js
-
-
-
 # ~~
 
 # prompt for a directory where the photos are located
@@ -74,6 +61,19 @@ fi
 (cd ./setup; npm i; npm run start)
 rm -rf ./setup/input && mkdir -p ./setup/input
 rm -rf ./public/photos/raw && mkdir -p ./public/photos/raw
+
+
+
+
+# ~~
+
+# rename to $albumName (prefix with PG and only alphanumeric characters)
+mv ../pixel-geeks "../$albumName"
+
+# Replace all pixel-geeks in the album with $albumName
+sed -i '' -e "s/pixel-geeks/$albumName/g" package.json
+sed -i '' -e "s/pixel-geeks/$tmpAlbumName/g" ./public/index.html
+sed -i '' -e "s/pixel-geeks/$tmpAlbumName/g" ./setup/digest.js
 
 
 
