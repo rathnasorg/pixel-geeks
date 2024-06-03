@@ -24,3 +24,4 @@ yarn-error.log*
 
 public/photos/raw
 setup/input
+setup/node_modules
