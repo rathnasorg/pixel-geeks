@@ -12,8 +12,8 @@ A photo album for geeks to host photos on GitHub.
 
 git clone https://github.com/rathnasorg/pixel-geeks.git
 cd pixel-geeks
-git config user.name yourname
-git config user.email yourname@example.com
+git config user.name anand
+git config user.email anand@rathnas.com
 ./pg.sh
 
 ```
