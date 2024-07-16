@@ -16,6 +16,11 @@ if ! command -v gh &> /dev/null; then
   echo "gh is not installed. Go to cli.github.com to install. Exiting..."
   exit 4
 fi
+# Proceed only if gh is auth'd
+if ! gh auth status >/dev/null 2>&1; then
+    echo "You need to login to gh cli first: gh auth login"
+    exit 5
+fi
 
 
 # ~~
