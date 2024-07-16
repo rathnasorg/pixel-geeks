@@ -10,6 +10,7 @@ A photo album for geeks to host photos on GitHub.
 
 ```sh
 
+gh auth login
 git clone https://github.com/rathnasorg/pixel-geeks.git
 cd pixel-geeks
 git config user.name anand
