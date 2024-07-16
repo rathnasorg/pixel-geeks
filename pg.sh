@@ -19,7 +19,7 @@ fi
 # Proceed only if gh is auth'd
 if ! gh auth status >/dev/null 2>&1; then
     echo "You need to login to gh cli first: gh auth login"
-    exit 5
+    exit 6
 fi
 
 
@@ -33,7 +33,7 @@ echo "Album name (clensed): $albumName, proceed? (Y/n)"
 read proceed
 if [ "$proceed" = "n" ]; then
   echo "Exiting..."
-  exit 1
+  exit 7
 fi
 
 
@@ -47,7 +47,7 @@ read -e -p "Enter directory where photos are located: " dir
 # Proceed only if the directory exists
 if [ ! -d "$dir" ]; then
   echo "Directory "$dir" does not exist. Exiting..."
-  exit 5
+  exit 8
 fi
 
 # copy all the photos from $dir to ./setup/input
@@ -57,7 +57,7 @@ cp $dir/* ./setup/input
 # Proceed only if ./setup/input is not empty
 if [ ! "$(ls -A ./setup/input)" ]; then
   echo "No photos found in setup/input. Exiting..."
-  exit 6
+  exit 9
 fi
 
 # ~~ 
@@ -72,7 +72,7 @@ rm -rf ./public/photos/raw && mkdir -p ./public/photos/raw
 # Proceed only if ./public/photos/optimized is not empty
 if [ ! "$(ls -A ./public/photos/optimized)" ]; then
   echo "No photos found in ./public/photos/optimized. Exiting..."
-  exit 7
+  exit 10
 fi
 
 # ~~
@@ -120,13 +120,20 @@ fi
 echo "Repository created. Waiting for 15 seconds..."
 sleep 15
 
+if gh api repos/$albumName &>/dev/null; then
+    echo "Repository $albumName exists"
+else
+    echo "Repository $albumName does not exist"
+    exit 11
+fi
+
 echo "Pushing to the new repo $updatedRemoteUrlNoCreds"
 # Commit and push to the new repository
 git add .
 git commit -m "Initial commit"
 git push -u origin main
 
-
+echo "Pushed the new repo to remote, opening in the browser now."
 
 # ~~
 
