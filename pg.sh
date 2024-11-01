@@ -120,7 +120,7 @@ fi
 echo "Repository created. Waiting for 15 seconds..."
 sleep 15
 
-if gh api repos/$albumName &>/dev/null; then
+if gh api repos/$usernameOrOrgname/$albumName &>/dev/null; then
     echo "Repository $albumName exists"
 else
     echo "Repository $albumName does not exist"
