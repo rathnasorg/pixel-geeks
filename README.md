@@ -1,7 +1,11 @@
-# Pixel-Geeks
+# **UPDATE: [i4tow](https://github.com/rathnasorg/i4tow-album) replaced [this(pixel-geeks)](https://github.com/rathnasorg/pixel-geeks) repo. It is archived and meant to be here only for reference sake.**
+
+
+
+## Pixel-Geeks
 A photo album for geeks to host photos on GitHub.
 
-## How to clone & use
+### How to clone & use
 
 - Ensure [github cli](cli.github.com) is installed
 - Clone this repo
@@ -19,7 +23,7 @@ git config user.email anand@rathnas.com
 
 ```
 
-## To host it on GitHub Pages
+### To host it on GitHub Pages
 
 - Create a GITHUB_TOKEN [here](https://github.com/settings/tokens) 
 - Add it as `GH_PAT` in https://github.com/{userOrOrg}/{repoName}/settings/secrets/actions
